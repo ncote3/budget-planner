@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Account } from "../../types";
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addAccount } from "../../store/Slices/accountSlice";
 
@@ -121,6 +121,7 @@ const NewAccountCreator = () => {
   const handleFormSubmission = (e: any) => {
     e.preventDefault();
     dispatch(addAccount(accountForm));
+    updateAccountForm(initialAccountFormState);
   };
 
   const styles = {
@@ -131,15 +132,21 @@ const NewAccountCreator = () => {
   };
 
   return (
-    <Form style={styles}>
-      {renderAccountName()}
-      {renderAccountBalance()}
-      {renderTargetAccountBalance()}
-      {renderAccountType()}
-      <Button variant="primary" type="submit" onClick={handleFormSubmission}>
-        Submit
-      </Button>
-    </Form>
+    <div style={styles}>
+      <h4>New Account Creator</h4>
+      <hr />
+      <Form>
+        <Row>
+          <Col>{renderAccountName()}</Col>
+          <Col>{renderAccountType()}</Col>
+        </Row>
+        <Row>{renderAccountBalance()}</Row>
+        <Row>{renderTargetAccountBalance()}</Row>
+        <Button variant="primary" type="submit" onClick={handleFormSubmission}>
+          Submit
+        </Button>
+      </Form>
+    </div>
   );
 };
 

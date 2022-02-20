@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import { AccountEvent } from "../../types";
-import { Button, Form, InputGroup } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { addAccountEvent } from "../../store/Slices/accountEventSlice";
+import { selectAccountNames } from "../../store/Slices/accountSlice";
 
 const AccountEventCreation = () => {
-  const [accountEventForm, updateAccountEventForm] = useState<AccountEvent>({
+  const initialAccountEventFormState: AccountEvent = {
     date: "",
     name: "",
     id: "",
     amount: 0,
     type: "Expense",
-  });
+  };
+
+  const [accountEventForm, updateAccountEventForm] = useState<AccountEvent>(
+    initialAccountEventFormState
+  );
 
   const dispatch = useDispatch();
+  const availableAccountNames = useSelector(selectAccountNames);
 
   const renderAccountEventName = () => {
     const { name } = accountEventForm;
@@ -94,8 +100,9 @@ const AccountEventCreation = () => {
           })
         }
         className="mb-3"
-        controlId="accountFormType"
+        controlId="accountEventFormType"
       >
+        <Form.Label>Account Event Type</Form.Label>
         <Form.Select value={type}>
           <option value="Expense">Expense</option>
           <option value="Income">Income</option>
@@ -104,29 +111,91 @@ const AccountEventCreation = () => {
     );
   };
 
+  const generateAccountOptions = () =>
+    availableAccountNames.map((accountName) => (
+      <option value={accountName}>{accountName}</option>
+    ));
+
+  const renderAccountEventAccountDebited = () => {
+    const { accountDebitedName = "" } = accountEventForm;
+
+    return (
+      <Form.Group
+        onChange={(e: any) =>
+          updateAccountEventForm({
+            ...accountEventForm,
+            accountDebitedName: e.target.value,
+          })
+        }
+        className="mb-3"
+        controlId="accountEventFormAccountDebited"
+      >
+        <Form.Label>Account Debited</Form.Label>
+        <Form.Select value={accountDebitedName}>
+          {generateAccountOptions()}
+        </Form.Select>
+      </Form.Group>
+    );
+  };
+
+  const renderAccountEventAccountCredited = () => {
+    const { accountCreditedName = "" } = accountEventForm;
+
+    return (
+      <Form.Group
+        onChange={(e: any) =>
+          updateAccountEventForm({
+            ...accountEventForm,
+            accountCreditedName: e.target.value,
+          })
+        }
+        className="mb-3"
+        controlId="accountEventFormAccountCredited"
+      >
+        <Form.Label>Account Credited</Form.Label>
+        <Form.Select value={accountCreditedName}>
+          {generateAccountOptions()}
+        </Form.Select>
+      </Form.Group>
+    );
+  };
+
   const handleFormSubmission = (e: any) => {
     e.preventDefault();
     dispatch(addAccountEvent(accountEventForm));
+    updateAccountEventForm(initialAccountEventFormState);
   };
 
   const styles = {
     borderRadius: "1%",
     padding: "1vw",
     border: "1px solid black",
-    width: "30%",
+    width: "60%",
   };
 
   return (
-    <Form style={styles}>
-      {renderAccountEventName()}
-      {renderAccountEventDate()}
-      {renderAccountEventAmount()}
-      {renderAccountEventType()}
+    <div style={styles}>
+      <h4>Account Event Creation</h4>
+      <hr />
+      <Form>
+        <Row>
+          <Col>{renderAccountEventName()}</Col>
+          <Col>{renderAccountEventDate()}</Col>
+        </Row>
+        <Row>
+          <Col>{renderAccountEventAmount()}</Col>
+          <Col>{renderAccountEventType()}</Col>
+        </Row>
+        <Row>
+          <Col>{renderAccountEventAccountDebited()}</Col>
+          <Col>{renderAccountEventAccountCredited()}</Col>
+        </Row>
 
-      <Button variant="primary" type="submit" onClick={handleFormSubmission}>
-        Submit
-      </Button>
-    </Form>
+        <Button variant="primary" type="submit" onClick={handleFormSubmission}>
+          Submit
+        </Button>
+      </Form>
+    </div>
   );
 };
 
