@@ -1,0 +1,7 @@
+TODO
+* need to create an account totals component, this will display a two column grid with a list of account names on one side
+  and account balances on the other. It will have props that determine if it will display/select the account names. It will
+  also display the total of all the listed accounts
+* need to create a account event display using the above component
+* need to create an account statement display using the above component
+* once the above is complete you can begin to plan how to get behavior like the excel sheet
