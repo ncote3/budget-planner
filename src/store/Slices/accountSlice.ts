@@ -43,5 +43,11 @@ export const accountSlice = createSlice({
 export const { updateAccountBalance, addAccount } = accountSlice.actions;
 
 export const selectAccounts = (state: RootState) => state.account.accounts;
+export const selectAccountNames = (state: RootState) => {
+  const { account } = state;
+  const { accounts } = account;
+
+  return accounts.map((account) => account.name);
+};
 
 export default accountSlice.reducer;

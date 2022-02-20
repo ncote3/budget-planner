@@ -1,14 +1,14 @@
 import React from "react";
 import "./App.css";
-import { RecurringEvent } from "../../types";
+import { AccountEvent } from "../../types";
 
 interface Props {
-  accountEvent: RecurringEvent;
+  accountEvent: AccountEvent;
 }
 
 const AccountEvent = (props: Props) => {
   const { accountEvent } = props;
-  const { date, name, amount, type, accountCredited, accountDebited } =
+  const { date, name, amount, type, accountCreditedName: accountCredited, accountDebitedName: accountDebited } =
     accountEvent;
 
   const renderAccountCredited = () => {

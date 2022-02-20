@@ -17,6 +17,8 @@ const NewAccountCreator = () => {
   const dispatch = useDispatch();
 
   const renderAccountName = () => {
+    const { name } = accountForm;
+
     return (
       <Form.Group
         onChange={(e: any) =>
@@ -29,12 +31,18 @@ const NewAccountCreator = () => {
         controlId="accountFormName"
       >
         <Form.Label>Account Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter Account Name" />
+        <Form.Control
+          value={name}
+          type="text"
+          placeholder="Enter Account Name"
+        />
       </Form.Group>
     );
   };
 
   const renderAccountBalance = () => {
+    const { balance } = accountForm;
+
     return (
       <Form.Group
         onChange={(e: any) =>
@@ -47,12 +55,18 @@ const NewAccountCreator = () => {
         controlId="accountFormBalance"
       >
         <Form.Label>Account Balance</Form.Label>
-        <Form.Control type="number" placeholder="Account Balance" />
+        <Form.Control
+          value={balance}
+          type="number"
+          placeholder="Account Balance"
+        />
       </Form.Group>
     );
   };
 
   const renderTargetAccountBalance = () => {
+    const { targetBalance } = accountForm;
+
     return (
       <Form.Group
         onChange={(e: any) =>
@@ -65,12 +79,18 @@ const NewAccountCreator = () => {
         controlId="accountFormTargetBalance"
       >
         <Form.Label>Account Target Balance</Form.Label>
-        <Form.Control type="number" placeholder="Account Target Balance" />
+        <Form.Control
+          value={targetBalance}
+          type="number"
+          placeholder="Account Target Balance"
+        />
       </Form.Group>
     );
   };
 
   const renderAccountType = () => {
+    const { type } = accountForm;
+
     return (
       <Form.Group
         onChange={(e: any) =>
@@ -82,7 +102,7 @@ const NewAccountCreator = () => {
         className="mb-3"
         controlId="accountFormType"
       >
-        <Form.Select>
+        <Form.Select value={type}>
           <option value="Checking">Checking</option>
           <option value="Savings">Savings</option>
           <option value="Credit">Credit</option>
@@ -97,12 +117,13 @@ const NewAccountCreator = () => {
   };
 
   return (
-    <Form>
+    <Form
+      style={{ borderRadius: "5", padding: "1vw", border: "1px solid black" }}
+    >
       {renderAccountName()}
       {renderAccountBalance()}
       {renderTargetAccountBalance()}
       {renderAccountType()}
-
       <Button variant="primary" type="submit" onClick={handleFormSubmission}>
         Submit
       </Button>

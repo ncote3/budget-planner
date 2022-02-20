@@ -5,14 +5,15 @@ export interface Account {
   name: string;
 }
 
-export interface RecurringEvent {
+export interface AccountEvent {
   date: string;
   name: string;
   id: string;
   amount: number;
-  type: "Bill" | "Income";
-  accountDebited?: Account;
-  accountCredited?: Account;
+  type: "Expense" | "Income";
+  accountDebitedName?: string;
+  accountCreditedName?: string;
+  recurringEndDate?: string;
 }
 
 export interface AccountUpdatePayload {

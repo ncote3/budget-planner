@@ -10,7 +10,7 @@ function App() {
   console.log(accounts);
 
   return (
-    <div className="App">
+    <div className="App" style={{ width: "50%", margin: "25%" }}>
       <NewAccountCreator />
     </div>
   );
