@@ -19,7 +19,8 @@ export interface AccountEvent {
   type: "Expense" | "Income";
   accountDebitedName?: string;
   accountCreditedName?: string;
-  recurringEndDate?: string;
+  recurringFrequency: "Monthly" | "Weekly" | "";
+  recurringTotalTimes?: number;
 }
 
 export interface AccountUpdatePayload {

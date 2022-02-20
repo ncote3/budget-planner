@@ -12,6 +12,7 @@ const AccountEventCreation = () => {
     id: "",
     amount: 0,
     type: "Expense",
+    recurringFrequency: "",
   };
 
   const [accountEventForm, updateAccountEventForm] = useState<AccountEvent>(
@@ -21,7 +22,7 @@ const AccountEventCreation = () => {
   const dispatch = useDispatch();
   const availableAccountNames = useSelector(selectAccountNames);
 
-  const renderAccountEventName = () => {
+  const renderName = () => {
     const { name } = accountEventForm;
 
     return (
@@ -36,16 +37,12 @@ const AccountEventCreation = () => {
         controlId="accountFormName"
       >
         <Form.Label>Account Event Name</Form.Label>
-        <Form.Control
-          value={name}
-          type="text"
-          placeholder="Enter Account Event Name"
-        />
+        <Form.Control value={name} type="text" />
       </Form.Group>
     );
   };
 
-  const renderAccountEventDate = () => {
+  const renderDate = () => {
     const { date } = accountEventForm;
 
     return (
@@ -59,13 +56,13 @@ const AccountEventCreation = () => {
         className="mb-3"
         controlId="accountEventFormDate"
       >
-        <Form.Label>Account Event Date</Form.Label>
+        <Form.Label>Date</Form.Label>
         <Form.Control value={date} type="date" />
       </Form.Group>
     );
   };
 
-  const renderAccountEventAmount = () => {
+  const renderAmount = () => {
     const { amount } = accountEventForm;
 
     return (
@@ -79,7 +76,7 @@ const AccountEventCreation = () => {
         className="mb-3"
         controlId="accountEventFormAmount"
       >
-        <Form.Label>Account Event Amount</Form.Label>
+        <Form.Label>Amount</Form.Label>
         <InputGroup className="mb-3">
           <InputGroup.Text>$</InputGroup.Text>
           <Form.Control value={amount} type="number" placeholder="Amount" />
@@ -116,7 +113,7 @@ const AccountEventCreation = () => {
       <option value={accountName}>{accountName}</option>
     ));
 
-  const renderAccountEventAccountDebited = () => {
+  const renderAccountDebited = () => {
     const { accountDebitedName = "" } = accountEventForm;
 
     return (
@@ -138,7 +135,7 @@ const AccountEventCreation = () => {
     );
   };
 
-  const renderAccountEventAccountCredited = () => {
+  const renderAccountCredited = () => {
     const { accountCreditedName = "" } = accountEventForm;
 
     return (
@@ -156,6 +153,50 @@ const AccountEventCreation = () => {
         <Form.Select value={accountCreditedName}>
           {generateAccountOptions()}
         </Form.Select>
+      </Form.Group>
+    );
+  };
+
+  const renderRecurringFrequency = () => {
+    const { recurringFrequency } = accountEventForm;
+
+    return (
+      <Form.Group
+        onChange={(e: any) =>
+          updateAccountEventForm({
+            ...accountEventForm,
+            recurringFrequency: e.target.value,
+          })
+        }
+        className="mb-3"
+        controlId="accountEventFormRecurringFrequency"
+      >
+        <Form.Label>Recurring Frequency</Form.Label>
+        <Form.Select value={recurringFrequency}>
+          <option value=""></option>
+          <option value="Monthly">Monthly</option>
+          <option value="Weekly">Weekly</option>
+        </Form.Select>
+      </Form.Group>
+    );
+  };
+
+  const renderTotalRecurringTimes = () => {
+    const { recurringTotalTimes = 0 } = accountEventForm;
+
+    return (
+      <Form.Group
+        onChange={(e: any) =>
+          updateAccountEventForm({
+            ...accountEventForm,
+            recurringTotalTimes: e.target.value,
+          })
+        }
+        className="mb-3"
+        controlId="accountEventFormRecurringTotalTimes"
+      >
+        <Form.Label>Total Recurring Times</Form.Label>
+        <Form.Control value={recurringTotalTimes} type="number" />
       </Form.Group>
     );
   };
@@ -179,16 +220,20 @@ const AccountEventCreation = () => {
       <hr />
       <Form>
         <Row>
-          <Col>{renderAccountEventName()}</Col>
-          <Col>{renderAccountEventDate()}</Col>
+          <Col>{renderName()}</Col>
+          <Col>{renderDate()}</Col>
         </Row>
         <Row>
-          <Col>{renderAccountEventAmount()}</Col>
+          <Col>{renderAmount()}</Col>
           <Col>{renderAccountEventType()}</Col>
         </Row>
         <Row>
-          <Col>{renderAccountEventAccountDebited()}</Col>
-          <Col>{renderAccountEventAccountCredited()}</Col>
+          <Col>{renderAccountDebited()}</Col>
+          <Col>{renderAccountCredited()}</Col>
+        </Row>
+        <Row>
+          <Col>{renderRecurringFrequency()}</Col>
+          <Col>{renderTotalRecurringTimes()}</Col>
         </Row>
 
         <Button variant="primary" type="submit" onClick={handleFormSubmission}>
