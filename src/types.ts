@@ -5,6 +5,12 @@ export interface Account {
   name: string;
 }
 
+export interface AccountStatement {
+  accountName: string;
+  balance: number;
+  date: string;
+}
+
 export interface AccountEvent {
   date: string;
   name: string;
