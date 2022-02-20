@@ -73,7 +73,7 @@ const AccountEventCreation = () => {
         className="mb-3"
         controlId="accountEventFormAmount"
       >
-        <Form.Label>Account Target Balance</Form.Label>
+        <Form.Label>Account Event Amount</Form.Label>
         <InputGroup className="mb-3">
           <InputGroup.Text>$</InputGroup.Text>
           <Form.Control value={amount} type="number" placeholder="Amount" />
@@ -109,10 +109,15 @@ const AccountEventCreation = () => {
     dispatch(addAccountEvent(accountEventForm));
   };
 
+  const styles = {
+    borderRadius: "1%",
+    padding: "1vw",
+    border: "1px solid black",
+    width: "30%",
+  };
+
   return (
-    <Form
-      style={{ borderRadius: "5", padding: "1vw", border: "1px solid black" }}
-    >
+    <Form style={styles}>
       {renderAccountEventName()}
       {renderAccountEventDate()}
       {renderAccountEventAmount()}

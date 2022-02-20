@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Account } from "../../types";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addAccount } from "../../store/Slices/accountSlice";
 
@@ -55,11 +55,14 @@ const NewAccountCreator = () => {
         controlId="accountFormBalance"
       >
         <Form.Label>Account Balance</Form.Label>
-        <Form.Control
-          value={balance}
-          type="number"
-          placeholder="Account Balance"
-        />
+        <InputGroup className="mb-3">
+          <InputGroup.Text>$</InputGroup.Text>
+          <Form.Control
+            value={balance}
+            type="number"
+            placeholder="Account Balance"
+          />
+        </InputGroup>
       </Form.Group>
     );
   };
@@ -79,11 +82,14 @@ const NewAccountCreator = () => {
         controlId="accountFormTargetBalance"
       >
         <Form.Label>Account Target Balance</Form.Label>
-        <Form.Control
-          value={targetBalance}
-          type="number"
-          placeholder="Account Target Balance"
-        />
+        <InputGroup className="mb-3">
+          <InputGroup.Text>$</InputGroup.Text>
+          <Form.Control
+            value={targetBalance}
+            type="number"
+            placeholder="Account Target Balance"
+          />
+        </InputGroup>
       </Form.Group>
     );
   };
@@ -102,6 +108,7 @@ const NewAccountCreator = () => {
         className="mb-3"
         controlId="accountFormType"
       >
+        <Form.Label>Account Type</Form.Label>
         <Form.Select value={type}>
           <option value="Checking">Checking</option>
           <option value="Savings">Savings</option>
@@ -116,10 +123,15 @@ const NewAccountCreator = () => {
     dispatch(addAccount(accountForm));
   };
 
+  const styles = {
+    borderRadius: "1%",
+    padding: "1vw",
+    border: "1px solid black",
+    width: "35%",
+  };
+
   return (
-    <Form
-      style={{ borderRadius: "5", padding: "1vw", border: "1px solid black" }}
-    >
+    <Form style={styles}>
       {renderAccountName()}
       {renderAccountBalance()}
       {renderTargetAccountBalance()}
